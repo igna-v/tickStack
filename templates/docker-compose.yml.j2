@@ -1,0 +1,58 @@
+version: '3'
+services:
+  influxdb:
+    build:
+      context: ./images/influxdb/
+      dockerfile: ./Dockerfile
+      args:
+        INFLUXDB_TAG: ${INFLUXDB_TAG}
+    image: "influxdb:latest"
+    hostname: "influxdb"
+    networks:
+      tik_net:
+    ports:
+      - "8086:8086"
+    volumes:
+      - ./etc/influxdb:/etc/influxdb
+  telegraf:
+    image: "telegraf:latest"
+    hostname: "telegraf"
+    networks:
+      tik_net:
+    ports:
+      - "8094:8094"
+    volumes:
+      - ./etc/telegraf:/etc/telegraf
+  kapacitor:
+    image: "kapacitor:latest"
+    hostname: "kapacitor"
+    networks:
+      tik_net:
+    ports:
+      - "9092:9092"
+    volumes:
+      - ./etc/kapacitor:/etc/kapacitor
+      - ./var/log/kapacitor:/var/log/kapacitor
+      - ./home/kapacitor:/home/kapacitor #Aca estarian los tick scripts
+  chronograf:
+    image: "chronograf:latest"
+    hostname: "chronograf"
+    networks:
+      tik_net:
+    ports:
+      - "8888:8888"
+  grafana:
+    image: "grafana/grafana:latest"
+    hostname: "grafana"
+    networks:
+      tik_net:
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./var/lib/grafana:/var/lib/grafana
+      - ./var/lib/grafana/plugins/briangann-gauge-panel:/var/lib/grafana/plugins/briangann-gauge-panel
+      - ./var/lib/grafana/plugins/yesoreyeram-boomtable-panel:/var/lib/grafana/plugins/yesoreyeram-boomtable-panel
+
+networks:
+  tik_net:
+    driver: bridge

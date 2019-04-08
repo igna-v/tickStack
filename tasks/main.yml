@@ -1,0 +1,126 @@
+- name: Install prerequisites
+  package: name={{item}} state=present
+  with_items:
+   - docker-py
+   - python
+
+
+# redHat -- yum
+# Debian -- apt
+# Suse -- zypper
+#- Checkear que este docker y docker compose y dependencias py etc
+#   docker-py >= 2.0
+#   python >= 2.7
+
+
+
+#   docker-compose >= 1.7.0
+#   Docker API >= 1.20
+#   PyYAML >= 3.11
+
+
+- name: create directory
+  file: path="{{item}}" state=directory
+  with_items:
+   - ./configs/etc/telegraf
+   - ./configs/etc/kapacitor
+   - ./configs/home/kapacitor
+   - ./configs/var/log/kapacitor
+   - ./configs/var/lib/grafana
+
+
+- name: "Copy telegraf configuration"
+  template:
+    src: "telegraf.conf.j2"
+    dest: "/configs/etc/telegraf/telegraf.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0640
+  become: yes
+
+- name: "Copy kapacitor configuration"
+  template:
+    src: "kapacitor.conf.j2"
+    dest: "/configs/etc/kapacitor/kapacitor.conf"
+    owner: kapacitor
+    group: kapacitor
+    mode: 0640
+  become: yes
+
+-   name: Create tick network
+    docker_network:
+      name: tick_net
+
+-   name: servicio influxdb
+    docker_swarm_service:
+        name: influxdb
+        image: "influxdb:latest"
+        networks:
+          tik_net:
+        publish:
+         - "8086:8086"
+        restart_config:
+            condition: on-failure
+            max_attempts: 5
+            window: 10
+
+
+-   name: servicio telegraf
+    docker_swarm_service:
+        name: telegraf
+        image: "telegraf:latest"
+        networks:
+          tik_net:
+        mounts:
+        -   source: /configs/etc/telegraf #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
+            target: /etc/telegraf #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
+            type: volume
+        publish:
+         - "8094:8094"
+        restart_config:
+            condition: on-failure
+            max_attempts: 5
+            window: 30
+
+
+-   name: servicio kapacitor
+    docker_swarm_service:
+        name: kapacitor
+        image: "kapacitor:latest"
+        networks:
+          tik_net:
+        mounts:
+        -   source: /configs/etc/kapacitor #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
+            target: /etc/kapacitor #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
+            type: volume
+        -   source: /configs/home/kapacitor 
+            target: /home/kapacitor
+            type: volume
+        -   source: /configs/var/log/kapacitor 
+            target: /var/log/kapacitor 
+            type: volume
+        publish:
+         - "9092:9092"
+        restart_config:
+            condition: on-failure
+            max_attempts: 5
+            window: 30
+
+
+-   name: servicio grafana
+    docker_swarm_service:
+        name: grafana
+        image: "grafana/grafana:latest"
+        networks:
+          tik_net:
+        mounts:
+        -   source: /configs/var/lib/grafana #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
+            target: /var/lib/grafana #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
+            type: volume
+        publish:
+         - "3000:3000"
+        restart_config:
+            condition: on-failure
+            max_attempts: 5
+            window: 30
+
