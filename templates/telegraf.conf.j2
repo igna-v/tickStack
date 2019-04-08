@@ -154,14 +154,6 @@
         {% endfor %}
       {% endif %}
 
-      {% if item.dato is defined and item.dato is iterable %}
-        {% for items in item.dato %}
-          {%if items == "MIKROTIK"}#deberia tener una clausula por modelo
-            telegraf_plugins_snmp_{{items}} #en este caso si items== MIKROTIK deberia tener la configuracion en telegraf_plugins_snmp_MIKROTIK
-
-          {% endif %}
-        {% endfor %}
-      {% endif %}
 
 
   {% endfor %}
