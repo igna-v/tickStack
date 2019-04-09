@@ -22,11 +22,11 @@
 - name: create directory
   file: path="{{item}}" state=directory
   with_items:
-   - ./configs/etc/telegraf
-   - ./configs/etc/kapacitor
-   - ./configs/home/kapacitor
-   - ./configs/var/log/kapacitor
-   - ./configs/var/lib/grafana
+   - /configs/etc/telegraf
+   - /configs/etc/kapacitor
+   - /configs/home/kapacitor
+   - /configs/var/log/kapacitor
+   - /configs/var/lib/grafana
 
 
 - name: "Copy telegraf configuration"
@@ -42,8 +42,6 @@
   template:
     src: "kapacitor.conf.j2"
     dest: "/configs/etc/kapacitor/kapacitor.conf"
-    owner: kapacitor
-    group: kapacitor
     mode: 0640
   become: yes
 
