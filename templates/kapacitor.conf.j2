@@ -1,3 +1,4 @@
+
 # The hostname of this node.
 # Must be resolvable by any configured InfluxDB hosts.
 hostname = "kapacitor"
@@ -44,7 +45,8 @@ default-retention-policy = ""
   # from a directory
   enabled = true
   # Directory where task/template/handler files are set
-  dir = "/home/kapacitor"
+  dir = "/home/kapacitor/load"
+
 
 
 [replay]
@@ -63,7 +65,7 @@ default-retention-policy = ""
 [storage]
   # Where to store the Kapacitor boltdb database
   boltdb = "/var/lib/kapacitor/kapacitor.db"
-
+{%raw%}
 [deadman]
   # Configure a deadman's switch
   # Globally configure deadman's switches on all tasks.
@@ -77,7 +79,7 @@ default-retention-policy = ""
   id = "node 'NODE_NAME' in task '{{ .TaskName }}'"
   # The message of the alert. INTERVAL will be replaced by the interval.
   message = "{{ .ID }} is {{ if eq .Level \"OK\" }}alive{{ else }}dead{{ end }}: {{ index .Fields \"collected\" | printf \"%0.3f\" }} points/INTERVAL."
-
+{%endraw%}
 
 # Multiple InfluxDB configurations can be defined.
 # Exactly one must be marked as the default.
@@ -304,14 +306,14 @@ default-retention-policy = ""
 
 [slack]
   # Configure Slack.
-  enabled = false
+  enabled = true
   # The Slack webhook URL, can be obtained by adding
   # an Incoming Webhook integration.
   # Visit https://slack.com/services/new/incoming-webhook
   # to add new webhook for Kapacitor.
-  url = ""
+  url = "https://hooks.slack.com/services/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"
   # Default channel for messages
-  channel = ""
+  channel = "#test"
   # If true all the alerts will be sent to Slack
   # without explicitly marking them in the TICKscript.
   global = false
