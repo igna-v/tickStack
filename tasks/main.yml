@@ -70,17 +70,19 @@
         name: telegraf
         image: "telegraf:latest"
         networks:
-          tik_net:
+          - tik_net
         mounts:
         -   source: /configs/etc/telegraf #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
             target: /etc/telegraf #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
             type: volume
         publish:
-         - "8094:8094"
-        restart_config:
-            condition: on-failure
-            max_attempts: 5
-            window: 30
+          - target_port: "8094"
+            published_port: "8094"
+        restart_policy: on-failure
+        restart_policy_attempts: 5
+        restart_policy_window: 10
+        state: present
+
 
 
 -   name: servicio kapacitor
@@ -88,23 +90,25 @@
         name: kapacitor
         image: "kapacitor:latest"
         networks:
-          tik_net:
+          - tik_net
         mounts:
         -   source: /configs/etc/kapacitor #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
             target: /etc/kapacitor #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
             type: volume
-        -   source: /configs/home/kapacitor 
+        -   source: /configs/home/kapacitor
             target: /home/kapacitor
             type: volume
-        -   source: /configs/var/log/kapacitor 
-            target: /var/log/kapacitor 
+        -   source: /configs/var/log/kapacitor
+            target: /var/log/kapacitor
             type: volume
         publish:
-         - "9092:9092"
-        restart_config:
-            condition: on-failure
-            max_attempts: 5
-            window: 30
+          - target_port: "9092"
+            published_port: "9092"
+        restart_policy: on-failure
+        restart_policy_attempts: 5
+        restart_policy_window: 10
+        state: present
+
 
 
 -   name: servicio grafana
@@ -118,9 +122,11 @@
             target: /var/lib/grafana #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
             type: volume
         publish:
-         - "3000:3000"
-        restart_config:
-            condition: on-failure
-            max_attempts: 5
-            window: 30
+          - target_port: "3000"
+            published_port: "3000"
+        restart_policy: on-failure
+        restart_policy_attempts: 5
+        restart_policy_window: 10
+        state: present
+
 
