@@ -70,7 +70,7 @@
         name: telegraf
         image: "telegraf:latest"
         networks:
-          - tik_net
+          - tick_net
         mounts:
         -   source: /configs/etc/telegraf #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
             target: /etc/telegraf #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
@@ -90,7 +90,7 @@
         name: kapacitor
         image: "kapacitor:latest"
         networks:
-          - tik_net
+          - tick_net
         mounts:
         -   source: /configs/etc/kapacitor #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
             target: /etc/kapacitor #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
@@ -116,7 +116,7 @@
         name: grafana
         image: "grafana/grafana:latest"
         networks:
-          tik_net:
+          tick_net
         mounts:
         -   source: /configs/var/lib/grafana #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
             target: /var/lib/grafana #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
