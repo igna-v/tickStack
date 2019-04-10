@@ -57,10 +57,10 @@
           tik_net:
         publish:
          - "8086:8086"
-        restart_config:
-            condition: on-failure
-            max_attempts: 5
-            window: 10
+        restart_policy: on-failure
+        restart_policy_attempts: 5
+        restart_policy_window: 10
+
 
 
 -   name: servicio telegraf
