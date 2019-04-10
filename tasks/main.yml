@@ -48,19 +48,21 @@
 -   name: Create tick network
     docker_network:
       name: tick_net
+      driver: overlay
 
 -   name: servicio influxdb
     docker_swarm_service:
         name: influxdb
         image: "influxdb:latest"
         networks:
-          tik_net:
+          - tick_net
         publish:
-         - "8086:8086"
+          - target_port: "8086"
+            published_port: "8086"
         restart_policy: on-failure
         restart_policy_attempts: 5
         restart_policy_window: 10
-
+        state: present
 
 
 -   name: servicio telegraf
