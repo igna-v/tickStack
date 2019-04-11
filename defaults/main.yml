@@ -11,7 +11,7 @@ telegraf_agent_hostname: "{{ inventory_hostname }}"
 telegraf_agent_interval: 10s
 telegraf_agent_debug: False
 telegraf_agent_round_interval: True
-telegraf_agent_flush_interval: 10s
+telegraf_agent_flush_interval: 10
 telegraf_agent_flush_jitter: 0s
 telegraf_agent_aws_tags: False
 telegraf_agent_aws_tags_prefix: ""
