@@ -1,8 +1,8 @@
-- name: Install prerequisites
-  package: name={{item}} state=present
-  with_items:
-   - docker-py
-   - python
+#- name: Install prerequisites
+#  package: name={{item}} state=present
+#  with_items:
+#   - docker-py
+#   - python
 
 
 # redHat -- yum

@@ -1,0 +1,8 @@
+ip,nombre,tipo
+192.168.5.4,redmine,hostLinux
+192.168.10.64,synbareos,hostLinux
+192.168.10.197,stdc02,hostLinux
+192.168.10.2,synrelay,hostLinux
+192.168.10.176,synfiles02,hostLinux
+192.168.10.230,synsrv02,hostLinux
+
