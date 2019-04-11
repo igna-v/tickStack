@@ -69,7 +69,7 @@
   {% for item in telegraf_plugins_default %}
     [[inputs.{{ item.plugin }}]]
     {% if item.interval is defined %}
-      interval = "{{ item.interval }}s"
+      interval = "{{ item.interval }}"
     {% endif %}
     {% if item.config is defined and item.config is iterable %}
       {% for items in item.config %}
