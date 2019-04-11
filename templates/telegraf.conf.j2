@@ -19,7 +19,8 @@
     debug = {{ telegraf_agent_debug | lower }}
     hostname = "{{ telegraf_agent_hostname }}"
     round_interval = {{ telegraf_agent_round_interval | lower }}
-    flush_interval = "{{ telegraf_agent_flush_interval }}"
+#    flush_interval = "{{ telegraf_agent_flush_interval }}"
+    flush_interval = 10
     flush_jitter = "{{ telegraf_agent_flush_jitter }}"
 {% if telegraf_agent_version is version_compare('0.13', '>=') %}
     collection_jitter = "{{ telegraf_agent_collection_jitter }}"

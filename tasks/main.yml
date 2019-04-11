@@ -4,7 +4,6 @@
 #   - docker-py
 #   - python
 
-
 # redHat -- yum
 # Debian -- apt
 # Suse -- zypper
@@ -17,6 +16,13 @@
 #   docker-compose >= 1.7.0
 #   Docker API >= 1.20
 #   PyYAML >= 3.11
+
+- name: Transformar ping csv a yaml
+  template:
+    src: "iterate_csv_ping.j2"
+    dest: "./roles/igna/defaults/main/ping.yml"
+  run_once: true
+  delegate_to: localhost
 
 
 - name: create directory

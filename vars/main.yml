@@ -1,0 +1,2 @@
+    csvfile: "{{ lookup('file', 'files/pingHosts.csv') }}"
+
