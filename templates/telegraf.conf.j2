@@ -15,14 +15,14 @@
 
 # Configuration for telegraf agent
 [agent]
-    interval = "{{ telegraf_agent_interval }}s"
+    interval = "{{ telegraf_agent_interval }}"
     debug = {{ telegraf_agent_debug | lower }}
     hostname = "{{ telegraf_agent_hostname }}"
     round_interval = {{ telegraf_agent_round_interval | lower }}
-    flush_interval = "{{ telegraf_agent_flush_interval }}s"
+    flush_interval = "{{ telegraf_agent_flush_interval }}"
     flush_jitter = "{{ telegraf_agent_flush_jitter }}s"
 {% if telegraf_agent_version is version_compare('0.13', '>=') %}
-    collection_jitter = "{{ telegraf_agent_collection_jitter }}s"
+    collection_jitter = "{{ telegraf_agent_collection_jitter }}"
     metric_batch_size = {{ telegraf_agent_metric_batch_size }}
     metric_buffer_limit = {{ telegraf_agent_metric_buffer_limit }}
     quiet = {{ telegraf_agent_quiet | lower }}
