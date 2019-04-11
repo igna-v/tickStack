@@ -1,0 +1,12 @@
+telegraf_plugins_ping:
+{% for item in csvfile.split("\n") %}
+{%   if loop.index != 1 %}
+{%     set list = item.split(",") %}
+  - plugin: ping
+    tags:
+      - name = "{{ list[0]|trim() }}"
+      - db = "{{ list[1]|trim() }}"
+    url:
+      - urls = [  "{{ list[2]|trim() }}"  ]
+{%   endif %}
+{% endfor %}
