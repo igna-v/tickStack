@@ -1,0 +1,15 @@
+telegraf_plugins_snmp:
+  - plugin: snmp
+    modelo:
+      - modelo = "mikrotik"
+    url:
+      - agents = [  "191.1.1.1.":161  ]
+      - community = "191.1.1.1."
+
+  - plugin: snmp
+    modelo:
+      - modelo = "hp"
+    url:
+      - agents = [  "1.1.1.1.":161  ]
+      - community = "1.1.1.1."
+

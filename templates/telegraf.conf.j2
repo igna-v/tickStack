@@ -136,27 +136,16 @@
 
 {% if telegraf_plugins_snmp is defined and telegraf_plugins_snmp is iterable %}
   {% for item in telegraf_plugins_snmp %}
-
     [[inputs.{{ item.plugin }}]]
-      {% if item.agents is defined and item.agents is iterable %}
-        {% for items in item.agents %}
-          {{ items }}
-        {% endfor %}
-      {% endif %}
-      {% if item.parameters is defined and item.parameters is iterable %}
-        {% for items in item.tags %}
-          {{ items }}
-        {% endfor %}
-      {% endif %}
-      {% if item.tags is defined and item.tags is iterable %}
-        [inputs.{{ item.plugin }}.tags]
-        {% for items in item.tags %}
-          {{ items }}
-        {% endfor %}
-      {% endif %}
-
-
-
+		{% if item.url is defined and item.url is iterable %}   
+			{% for items in item.url %}
+				{{ items }}
+			{% endfor %}
+  		version = 2
+  		interval = "60s"
+  		timeout = "10s"
+  		retries = 3
+      	{% endif %}   
   {% endfor %}
 {% endif %}
 

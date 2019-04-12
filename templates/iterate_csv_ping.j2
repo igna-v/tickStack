@@ -1,5 +1,5 @@
 telegraf_plugins_ping:
-{% for item in csvfile.split("\n") %}
+{% for item in csvfileping.split("\n") %}
 {%   if loop.index != 1 %}
 {%     set list = item.split(",") %}
   - plugin: ping

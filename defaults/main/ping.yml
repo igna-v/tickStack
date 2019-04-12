@@ -1,37 +1,37 @@
 telegraf_plugins_ping:
   - plugin: ping
     tags:
-      - name = "192.168.5.4"
-      - db = "redmine"
+      - name = "redmine"
+      - db = "hostLinux"
     url:
-      - urls = [  "hostLinux"  ]
+      - urls = [  "192.168.5.4"  ]
   - plugin: ping
     tags:
-      - name = "192.168.10.64"
-      - db = "synbareos"
+      - name = "synbareos"
+      - db = "hostLinux"
     url:
-      - urls = [  "hostLinux"  ]
+      - urls = [  "192.168.10.64"  ]
   - plugin: ping
     tags:
-      - name = "192.168.10.197"
-      - db = "stdc02"
+      - name = "stdc02"
+      - db = "hostLinux"
     url:
-      - urls = [  "hostLinux"  ]
+      - urls = [  "192.168.10.197"  ]
   - plugin: ping
     tags:
-      - name = "192.168.10.2"
-      - db = "synrelay"
+      - name = "synrelay"
+      - db = "hostLinux"
     url:
-      - urls = [  "hostLinux"  ]
+      - urls = [  "192.168.10.2"  ]
   - plugin: ping
     tags:
-      - name = "192.168.10.176"
-      - db = "synfiles02"
+      - name = "synfiles02"
+      - db = "hostLinux"
     url:
-      - urls = [  "hostLinux"  ]
+      - urls = [  "192.168.10.176"  ]
   - plugin: ping
     tags:
-      - name = "192.168.10.230"
-      - db = "synsrv02"
+      - name = "synsrv02"
+      - db = "hostLinux"
     url:
-      - urls = [  "hostLinux"  ]
+      - urls = [  "192.168.10.230"  ]

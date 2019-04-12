@@ -25,6 +25,15 @@
   delegate_to: localhost
 
 
+- name: Transformar snmp csv a yaml
+  template:
+    src: "iterate_csv_snmp.j2"
+    dest: "./roles/igna/defaults/main/snmp.yml"
+  run_once: true
+  delegate_to: localhost
+
+
+
 - name: create directory
   file: path="{{item}}" state=directory
   with_items:
