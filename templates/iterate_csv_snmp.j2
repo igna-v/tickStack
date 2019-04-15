@@ -3,8 +3,7 @@ telegraf_plugins_snmp:
 {%   if loop.index != 1 %}
 {%     set list = item.split(",") %}
   - plugin: snmp
-    modelo:
-      - modelo = "{{ list[0]|trim() }}"
+    modelo: "{{ list[0]|trim() }}"
     url:
       - agents = [  "{{ list[1]|trim() }}":161  ]
       - community = "{{ list[1]|trim() }}"

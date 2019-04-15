@@ -137,20 +137,30 @@
 {% if telegraf_plugins_snmp is defined and telegraf_plugins_snmp is iterable %}
   {% for item in telegraf_plugins_snmp %}
     [[inputs.{{ item.plugin }}]]
-		{% if item.url is defined and item.url is iterable %}   
-			{% for items in item.url %}
-				{{ items }}
-			{% endfor %}
-  		version = 2
-  		interval = "60s"
-  		timeout = "10s"
-  		retries = 3
-      	{% endif %}   
+                {% if item.url is defined and item.url is iterable %}
+                        {% for items in item.url %}
+                                {{ items }}
+                        {% endfor %}
+                {% endif %}
+                version = 2
+                interval = "60s"
+                timeout = "10s"
+                retries = 3
+      {% if item.modelo is defined %}
+        [inputs.snmp.tags]
+            nombre = "{{item.modelo}}"
+
+          {% if item.modelo == "mikrotik" %}
+               ####CONF MIKROTIK
+          {% endif %}
+          {% if item.modelo == "hp" %}
+               ####CONF HP
+          {% endif %}
+      {% endif %}        
+
+
   {% endfor %}
 {% endif %}
-
-
-#chequeo item.modelo
 
 #################### SNMP PLUGIN
 
