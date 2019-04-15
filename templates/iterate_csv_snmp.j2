@@ -5,8 +5,8 @@ telegraf_plugins_snmp:
   - plugin: snmp
     modelo: "{{ list[0]|trim() }}"
     url:
-      - agents = [  "{{ list[1]|trim() }}":161  ]
-      - community = "{{ list[1]|trim() }}"
+      - agents = [  "{{ list[1]|trim() }}:161"  ]
+      - community = "{{ list[2]|trim() }}"
 
 {%   endif %}
 {% endfor %}

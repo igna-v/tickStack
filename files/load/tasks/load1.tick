@@ -1,0 +1,85 @@
+dbrp "test"."autogen"
+
+var db = 'test'
+
+var rp = 'autogen'
+
+var measurement = 'system'
+
+var groupBy = ['host']
+
+var whereFilter = lambda: TRUE
+
+var name = 'Unix Sistems, system load 1'
+
+var idVar = name + '-{{.Group}}'
+
+var idTag = 'alertID'
+
+var levelTag = 'level'
+
+var messageField = 'message'
+
+var durationField = 'duration'
+
+var outputDB = 'chronograf'
+
+var outputRP = 'semana'
+
+var outputMeasurement = 'alerts'
+
+var triggerType = 'threshold'
+
+var crit = 2
+
+var warn = 2
+
+var period = 30m
+
+var every = 5m
+
+var message = '{{.ID}} está {{.Level}}. El valor: {{ index .Fields "value" }} de los últimos ' + string(period) + ' está fuera de los umbrales establecidos . [' + string(warn) + '-' + string(crit) + '] en la fecha {{.Time}}.' + '|' + string(every) + ';' + string(period) + '|{{ index .Fields "value" }};' + string(warn) + ';' + string(crit)
+
+var data = stream
+    |from()
+        .database(db)
+        .retentionPolicy(rp)
+        .measurement(measurement)
+        .groupBy(groupBy)
+        .where(whereFilter)
+    |window()
+        .period(period)
+        .every(every)
+    |eval(lambda: "load1")
+        .as('value')
+
+var trigger = data
+    |alert()
+        .warn(lambda: "value" > warn)
+        .crit(lambda: "value" > crit)
+        .message(message)
+        .id(idVar)
+        .idTag(idTag)
+        .levelTag(levelTag)
+        .messageField(messageField)
+        .durationField(durationField)
+        .stateChangesOnly()
+        .log('/var/log/kapacitor/load1.log')
+        .slack()
+        .channel('#test')
+
+trigger
+    |eval(lambda: float("value"))
+        .as('value')
+        .keep()
+    |influxDBOut()
+        .create()
+        .database(outputDB)
+        .retentionPolicy(outputRP)
+        .measurement(outputMeasurement)
+        .tag('alertName', name)
+        .tag('triggerType', triggerType)
+
+trigger
+    |httpOut('output')
+

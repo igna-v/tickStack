@@ -43,6 +43,10 @@
    - /configs/var/log/kapacitor
    - /configs/var/lib/grafana
 
+- name: copy tick scripts (whole folder included in files)
+  copy:
+    src: "files/load/"
+    dest: "/configs/home/kapacitor"
 
 - name: "Copy telegraf configuration"
   template:
