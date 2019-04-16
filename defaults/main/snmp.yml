@@ -3,11 +3,11 @@ telegraf_plugins_snmp:
     modelo: "mikrotik"
     url:
       - agents = [  "191.1.1.1:161"  ]
-      - community = "191.1.1.1"
+      - community = "pass"
 
   - plugin: snmp
     modelo: "hp"
     url:
       - agents = [  "1.1.1.1:161"  ]
-      - community = "1.1.1.1"
+      - community = "pass"
 

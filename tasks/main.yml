@@ -69,6 +69,13 @@
       name: tick_net
       driver: overlay
 
+#Apagar un servicio
+#- name: apagar algo
+#  docker_swarm_service:
+#      name: telegraf
+#      state: absent
+
+
 -   name: servicio influxdb
     docker_swarm_service:
         name: influxdb
@@ -82,6 +89,10 @@
         restart_policy_attempts: 5
         restart_policy_window: 10
         state: present
+
+- name: prerequisite pips
+  pip:
+    name: ['requests', 'influxdb']
 
 
 -   name: servicio telegraf
@@ -149,4 +160,22 @@
         restart_policy_window: 10
         state: present
 
+- name: Espero el puerto 8086 de influxdb
+  wait_for:
+    host: 192.168.11.121
+    port: 8086
+
+- name: Create database
+  influxdb_database:
+      hostname: "{{influxIp2}}"
+      database_name: "{{influxDatabase}}"
+
+- name: create 1 day retention policy
+  influxdb_retention_policy:
+      hostname: "{{influxIp2}}"
+      database_name: "{{influxDatabase}}"
+      policy_name: dia
+      duration: 1d
+      replication: 1
+      default: true
 
