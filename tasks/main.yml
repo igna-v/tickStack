@@ -24,6 +24,7 @@
    - /configs/home/kapacitor
    - /configs/var/log/kapacitor
    - /configs/var/lib/grafana
+   - /configs/var/lib/influxdb
 
 - name: copy tick scripts (whole folder included in files)
   copy:
@@ -64,6 +65,10 @@
         image: "influxdb:latest"
         networks:
           - tick_net
+        mounts:
+           - source: /configs/var/lib/influxdb
+             target: /var/lib/influxdb
+             type: bind
         publish:
           - target_port: "8086"
             published_port: "8086"
