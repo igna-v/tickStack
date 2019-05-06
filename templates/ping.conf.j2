@@ -1,0 +1,17 @@
+{% if telegraf_plugins_ping is defined and telegraf_plugins_ping is iterable %}
+  {% for item in telegraf_plugins_ping %}
+    [[inputs.{{ item.plugin }}]]
+      {% if item.url is defined and item.url is iterable %}
+        {% for items in item.url %}
+          {{ items }}
+        {% endfor %}
+      {% endif %}
+      {% if item.tags is defined and item.tags is iterable %}
+        [inputs.{{ item.plugin }}.tags]
+        {% for items in item.tags %}
+          {{ items }}
+        {% endfor %}
+      {% endif %}
+  {% endfor %}
+{% endif %}
+

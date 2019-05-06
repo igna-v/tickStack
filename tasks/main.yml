@@ -20,6 +20,7 @@
   file: path="{{item}}" state=directory
   with_items:
    - /configs/etc/telegraf
+   - /configs/etc/telegraf/telegraf.d
    - /configs/etc/kapacitor
    - /configs/home/kapacitor
    - /configs/var/log/kapacitor
@@ -31,7 +32,7 @@
     src: "files/load/"
     dest: "/configs/home/kapacitor"
 
-- name: "Copy telegraf configuration"
+- name: "Copy telegraf basic configuration"
   template:
     src: "telegraf.conf.j2"
     dest: "/configs/etc/telegraf/telegraf.conf"
@@ -39,6 +40,25 @@
     group: telegraf
     mode: 0640
   become: yes
+
+- name: "Copy telegraf snmp configuration"
+  template:
+    src: "snmp.conf.j2"
+    dest: "/configs/etc/telegraf/telegraf.d/snmp.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0640
+  become: yes
+
+- name: "Copy telegraf ping configuration"
+  template:
+    src: "ping.conf.j2"
+    dest: "/configs/etc/telegraf/telegraf.d/ping.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0640
+  become: yes
+
 
 - name: "Copy kapacitor configuration"
   template:
@@ -91,6 +111,9 @@
         mounts:
            - source: /configs/etc/telegraf #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
              target: /etc/telegraf #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
+             type: bind
+           - source: /configs/etc/telegraf/telegraf.d
+             target: /etc/telegraf/telegraf.d
              type: bind
         publish:
           - target_port: "8094"
@@ -149,7 +172,7 @@
 
 - name: Espero el puerto 8086 de influxdb
   wait_for:
-    host: 192.168.11.121
+    host: "{{influxIp2}}"
     port: 8086
 
 - name: Create database
