@@ -41,6 +41,16 @@
     mode: 0640
   become: yes
 
+- name: "Copy if mib"
+  copy:
+    src: "files/IF-MIB.txt"
+    dest: "/usr/share/snmp/mibs"
+    owner: telegraf
+    group: telegraf
+    mode: 0640
+  become: yes
+
+
 - name: "Copy telegraf snmp configuration"
   template:
     src: "snmp.conf.j2"
@@ -115,6 +125,13 @@
            - source: /configs/etc/telegraf/telegraf.d
              target: /etc/telegraf/telegraf.d
              type: bind
+           - source: /usr/share/snmp/mibs
+             target: /usr/share/snmp/mibs
+             type: bind
+
+        args: 
+          - --config-directory
+          - /etc/telegraf/telegraf.d
         publish:
           - target_port: "8094"
             published_port: "8094"
