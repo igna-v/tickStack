@@ -1,8 +1,6 @@
 nombre,tipo,ip
-redmine,hostLinux,192.168.5.4
-synbareos,hostLinux,192.168.10.64
-stdc02,hostLinux,192.168.10.197
-synrelay,hostLinux,192.168.10.2
-synfiles02,hostLinux,192.168.10.176
-synsrv02,hostLinux,192.168.10.230
+r,hostLinux,12.18.5.44
+ss,hostLinux,12.68.1.154
+s2,hostLinux,12.68.1.17
+sy,hostLinux,12.68.1.2
 
