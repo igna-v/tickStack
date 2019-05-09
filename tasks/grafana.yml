@@ -14,10 +14,10 @@
     time_interval: ">10s"
     validate_certs: False 
 
-- name: copy dashboards
-  copy:
-    src: "files/snmp.json"
-    dest: "/configs/dashboards/snmp.json"
+#- name: copy dashboards
+#  copy:
+#    src: "files/snmp.json"
+#    dest: "/configs/dashboards/snmp.json.j2"
 
 
 
@@ -33,15 +33,17 @@
    
 - name: "copiar dashboard de SNMP"
   uri:
-    url: http://{{influxIp2}}:3000/api/dashboards/db
+    url: "http://{{influxIp2}}:3000/api/dashboards/db"
     method: POST
     user: admin
     password: 4dm1n
-    body: "{{ lookup('file','files/snmp.json') | from_json }}"
+#    body: " {{ lookup('template', 'templates/snmpdashboard.json.j2') }}"
+    body: " {{lookup('file', 'files/snmp.json') }} "
     status_code: 200
-    body_format: raw
+    body_format: json
     force_basic_auth: yes
-    headers: "application/json"
+    headers: 
+       Content-Type: "application/json"
 #  with_items: "{{ grafana.dashboards }}"
 
 
