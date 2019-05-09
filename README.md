@@ -12,6 +12,7 @@ It adds a grafana dashboard showing basic snmp data(interfaces/uptime).
 *El script lee snmpHosts.csv y a esos agentes le monitorea datos basicos de networking(solo mira las interfaces, no se preocupa del modelo), de pingHost.csv lee las ip para el modulo ping. De la carpeta files/load/tasks levanta los tick scripts que kapacitor va a correr
 
 
+
 Para correr el script hay que generar un archivo de inventario
 Ej.:
 inventory.txt
