@@ -2,8 +2,8 @@ telegraf_plugins_snmp:
   - plugin: snmp
     modelo: "mikrotik"
     url:
-      - agents = [  "192.168.10.5:161"  ]
-      - community = "synpublic"
+      - agents = [  "12.18.1.15:161"  ]
+      - community = "public"
 
   - plugin: snmp
     modelo: "hp"

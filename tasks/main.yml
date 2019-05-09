@@ -22,10 +22,12 @@
    - /configs/etc/telegraf
    - /configs/etc/telegraf/telegraf.d
    - /configs/etc/kapacitor
+#   - /configs/etc/grafana
    - /configs/home/kapacitor
    - /configs/var/log/kapacitor
    - /configs/var/lib/grafana
    - /configs/var/lib/influxdb
+   - /configs/dashboards
 
 - name: copy tick scripts (whole folder included in files)
   copy:
@@ -179,6 +181,12 @@
         -   source: /configs/var/lib/grafana #The source of the mount. For named volumes, this is the name of the volume. For anonymous volumes, this field is omitted. May be specified as source or src.
             target: /var/lib/grafana #The destination takes as its value the path where the file or directory is mounted in the container. May be specified as destination, dst, or target.
             type: bind
+#        -   source: /configs/etc/grafana
+#            target: /etc/grafana
+#            type: bind
+        -   source: /configs/dashboards
+            target: /configs/dashboards
+            type: bind
         publish:
           - target_port: "3000"
             published_port: "3000"
@@ -205,4 +213,7 @@
       duration: 1d
       replication: 1
       default: true
+
+- name: configure grafana
+  include: grafana.yml
 

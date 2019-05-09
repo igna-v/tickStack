@@ -1,0 +1,47 @@
+-  name: "change admin pass"
+   shell: "docker exec -ti grafana.1.$(docker service ps -f 'name=grafana.1' grafana -q --no-trunc | head -n1) grafana-cli admin reset-admin-password 4dm1n"
+
+
+- name: Create influxdb datasource
+  grafana_datasource:
+    name: "datasource-influxdb"
+    grafana_url: "http://{{influxIp2}}:3000"
+    grafana_user: "admin"
+    grafana_password: "4dm1n"
+    ds_type: "influxdb"
+    url: "http://{{influxIp2}}:8086"
+    database: "test"
+    time_interval: ">10s"
+    validate_certs: False 
+
+- name: copy dashboards
+  copy:
+    src: "files/snmp.json"
+    dest: "/configs/dashboards/snmp.json"
+
+
+
+#- name: "Copiar dashboard de Snmp"
+#  uri:
+#   url: "http://{{influxIp2}}:3000/api/dashboards/db HTTP/1.1"
+#   method: POST
+#   body_format: json
+#   user: admin
+#   password: 4dm1n
+#   src: /configs/dashboards/snmp.json
+#   remote_src: true
+   
+- name: "copiar dashboard de SNMP"
+  uri:
+    url: http://{{influxIp2}}:3000/api/dashboards/db
+    method: POST
+    user: admin
+    password: 4dm1n
+    body: "{{ lookup('file','files/snmp.json') | from_json }}"
+    status_code: 200
+    body_format: raw
+    force_basic_auth: yes
+    headers: "application/json"
+#  with_items: "{{ grafana.dashboards }}"
+
+
