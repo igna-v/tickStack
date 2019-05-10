@@ -1,0 +1,15 @@
+grafana_dashboards: 
+          
+       
+          
+          -   name: "snmp"
+              file: "./files/dashboards/snmp.json"
+          
+          
+          -   name: "linux"
+              file: "./files/dashboards/linux.json"
+          
+
+          
+          
+

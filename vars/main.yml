@@ -1,3 +1,4 @@
     csvfileping: "{{ lookup('file', 'files/pingHosts.csv') }}"
     csvfilesnmp: "{{ lookup('file', 'files/snmpHosts.csv') }}"
+    csvfiledashboards: "{{ lookup('file', 'files/dashboards.csv') }}" 
 

@@ -1,0 +1,16 @@
+grafana_dashboards: 
+          
+       
+{% for item in csvfiledashboards.split("\n") %}
+{%   if loop.index != 1 %}
+{%     set list = item.split(",") %}
+          
+          -   name: "{{ list[0]|trim() }}"
+              file: "./files/dashboards/{{ list[0]|trim() }}.json"
+          
+{%   endif %}
+{% endfor %}
+
+          
+          
+
