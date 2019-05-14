@@ -1,0 +1,40 @@
+kapacitor_scripts:
+  - nombre: host1
+    measurement:
+     load1:
+       crit: 2.379237714
+       warn: 2.714383323
+     load5:
+       crit: 0.368137086
+       warn: 1.833292711
+     load15:
+       crit: 0.468954923
+       warn: 1.441638902
+
+
+  - nombre: host2
+    measurement:
+     load1:
+       crit: 1.704855019
+       warn: 0.35808875
+     load5:
+       crit: 2.740332147
+       warn: 1.703642905
+     load15:
+       crit: 0.67072799
+       warn: 1.499896414
+
+
+  - nombre: host3
+    measurement:
+     load1:
+       crit: 2.32494854
+       warn: 0.315692979
+     load5:
+       crit: 2.331933532
+       warn: 2.611306528
+     load15:
+       crit: 2.958209181
+       warn: 0.603513267
+
+

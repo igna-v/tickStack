@@ -1,0 +1,14 @@
+{
+  "dbrps": [{"db": "telegraf", "rp": "dia"}],
+  "template-id": "my_template",
+  "vars": {
+    "measurement": {"type" : "string", "value" : "system" },
+    "where_filter": {"type": "lambda", "value": "\"host\" == '{{item.nombre}}'"},
+    "groups": {"type": "list", "value": [{"type":"string", "value":"host"},
+    "field": {"type" : "string", "value" : "load1" },
+    "warn": {"type" : "lambda", "value" : "\"mean\" < {{item.measurement.load1.warn}}" },
+    "crit": {"type" : "lambda", "value" : "\"mean\" < {{item.measurement.load1.crit}}" },
+    "window": {"type" : "duration", "value" : "30m" },
+    "slack_channel": {"type" : "string", "value" : "#test" }
+  }
+}

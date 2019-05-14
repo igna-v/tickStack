@@ -1,0 +1,20 @@
+kapacitor_scripts:
+{% for item in csvfilescripts.split("\n") %}
+{%   if loop.index != 1 %}
+{%     set list = item.split(",") %}
+  - nombre: {{ list[0]|trim() }}
+    measurement:
+     load1:
+       crit: {{ list[1]|trim() }}
+       warn: {{ list[2]|trim() }}
+     load5:
+       crit: {{ list[3]|trim() }}
+       warn: {{ list[4]|trim() }}
+     load15:
+       crit: {{ list[5]|trim() }}
+       warn: {{ list[6]|trim() }}
+
+
+{%   endif %}
+{% endfor %}
+

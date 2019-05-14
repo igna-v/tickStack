@@ -14,7 +14,21 @@
   run_once: true
   delegate_to: localhost
 
+- name: Transformar scripts csv a yaml
+  template:
+    src: "iterate_csv_scripts.j2"
+    dest: "./roles/igna/defaults/main/scripts.yml"
+  run_once: true
+  delegate_to: localhost
 
+- name: create files
+  template:
+    src: "json_format.j2"
+    dest: "/a/{{item.nombre}}.json" 
+  with_items:
+   - "{{ kapacitor_scripts }}"
+  run_once: true
+  delegate_to: localhost
 
 - name: create directory
   file: path="{{item}}" state=directory
