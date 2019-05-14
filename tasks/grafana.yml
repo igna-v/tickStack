@@ -1,3 +1,9 @@
+- name: Espero que levante el contenedor de grafana
+  wait_for:
+    host: "{{influxIp2}}"
+    port: 3000
+
+
 -  name: "change admin pass"
    shell: "docker exec -ti grafana.1.$(docker service ps -f 'name=grafana.1' grafana -q --no-trunc | head -n1) grafana-cli admin reset-admin-password 4dm1n"
 

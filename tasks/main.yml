@@ -94,7 +94,7 @@
 -   name: servicio influxdb
     docker_swarm_service:
         name: influxdb
-        image: "influxdb:latest"
+        image: "influxdb:1.7.6"
         networks:
           - tick_net
         mounts:
@@ -117,7 +117,7 @@
 -   name: servicio telegraf
     docker_swarm_service:
         name: telegraf
-        image: "telegraf:latest"
+        image: "telegraf:1.9.5"
         networks:
           - tick_net
         mounts:
@@ -148,7 +148,7 @@
 -   name: servicio kapacitor
     docker_swarm_service:
         name: kapacitor
-        image: "kapacitor:latest"
+        image: "kapacitor:1.5.2"
         networks:
           - tick_net
         mounts:
@@ -174,7 +174,7 @@
 -   name: servicio grafana
     docker_swarm_service:
         name: grafana
-        image: "grafana/grafana:latest"
+        image: "grafana/grafana:6.1.6"
         networks:
           tick_net
         mounts:

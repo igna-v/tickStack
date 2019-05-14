@@ -1,0 +1,40 @@
+// Which measurement to consume
+var measurement string
+// Optional where filter
+var where_filter = lambda: TRUE
+// Optional list of group by dimensions
+var groups = [*]
+// Which field to process
+var field string
+// Warning criteria, has access to 'mean' field
+var warn lambda
+// Critical criteria, has access to 'mean' field
+var crit lambda
+// How much data to window
+var window = 5m
+var period = 30m
+var every = 5m
+var warnin string
+var criti string
+// The slack channel for alerts
+var slack_channel = '#test'
+
+var message = '{{.ID}} está {{.Level}}. El valor: {{ index .Fields "value" }} de los últimos ' + string(period) + ' está fuera de los umbrales establecidos . [' + warnin + '-' + criti + '] en la fecha {{.Time}}.' + '|' + string(every) + ';' + string(period) + '|{{ index .Fields "value" }};' + warnin + ';' + criti
+
+stream
+    |from()
+        .measurement(measurement)
+        .where(where_filter)
+        .groupBy(groups)
+    |window()
+        .period(period)
+        .every(every)
+    |mean(field)
+    |alert()
+        .warn(warn)
+        .crit(crit)
+        .slack()
+        .channel(slack_channel)
+        .message(message)
+        .stateChangesOnly()
+

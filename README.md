@@ -1,15 +1,22 @@
 Role for installing tick stack (- chronograf + grafana), using docker swarm
 
+REQUIREMENTS:
 
-The ansible controller needs Jinja2 to use the templates
+    - Target has to have docker/pip (01Startup.yml && 02Config.yml)
+    - The ansible controller needs Jinja2 to use the templates
+    - The target needs influxdb python package(installed with pip in the role)
 
-The target needs influxdb python package(installed with pip in the role)
+In the files a file called snmpHosts.csv is used to retrieve the ip/community/model to monitor from snmp, and pingHosts.csv has the ip to perform a ping checkup.
 
-In the files a file called snmpHosts.csv is used to retrieve the ip/community/model to monitor from snmp, and pingHosts.csv has the ip to perform a ping checkup. Finally a load/tasks/ folder includes the tick scripts
+ Finally a load/ folder includes the tick scripts
+ It has a basic template to add scripts.
 
-It adds a grafana dashboard showing basic snmp data(interfaces/uptime).
+It reads a csv file with the grafana dashboards to upload(needs improvement).
 
 *El script lee snmpHosts.csv y a esos agentes le monitorea datos basicos de networking(solo mira las interfaces, no se preocupa del modelo), de pingHost.csv lee las ip para el modulo ping. De la carpeta files/load/tasks levanta los tick scripts que kapacitor va a correr
+
+
+Para agregar los scripts, con el template por cada yaml en files/tasks genera un script con los parametros que se definan en el yaml. (falta que ansible genere los yaml a partir del inventario)
 
 
 
@@ -60,5 +67,6 @@ Y corriendo:
 ansible-playbook -i inventory.txt swarmsetup.yml
 Corre el script instalando todo
 
-La parte de grafana.yml, cambia la pass default de grafana, agrega la base de influx y crea un dashboard que muestra la parte basica de snmp.
+La parte de grafana.yml, cambia la pass default de grafana, agrega la base de influx, y despues mira los dashboards que estan en el csv(hay que cambiar la manera de elegirlos, para que suba todos directos o sea un comando mas facil en ves de un csv) y agrega esos dashboards a grafana.
+
 
