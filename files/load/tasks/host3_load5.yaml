@@ -1,0 +1,16 @@
+
+  dbrps:
+   - {db: "test", rp: "dia"}
+  template-id: "basic_template"
+  vars: {
+    "measurement": {"type" : "string", "value" : "system" },
+    "where_filter": {"type": "lambda", "value": "\"host\" == 'host3'"},
+    "field": {"type" : "string", "value" : "load5" },
+    "warn": {"type" : "lambda", "value" : "\"mean\" < '2.611306528'" },
+    "crit": {"type" : "lambda", "value" : "\"mean\" < '2.331933532'" },
+    "warnin": {"type" : "string", "value" : "20" },
+    "criti": {"type" : "string", "value" : "10" },
+    "window": {"type" : "duration", "value" : "30m" },
+    "slack_channel": {"type" : "string", "value" : "#test" }
+  }
+

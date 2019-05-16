@@ -24,9 +24,10 @@
 - name: create files
   template:
     src: "json_format.j2"
-    dest: "/a/{{item.nombre}}.json" 
-  with_items:
+    dest: "./roles/igna/files/load/tasks/{{item[0].nombre}}_{{item[1]}}.yaml" 
+  with_nested:
    - "{{ kapacitor_scripts }}"
+   - ["load1","load5","load15"]
   run_once: true
   delegate_to: localhost
 
