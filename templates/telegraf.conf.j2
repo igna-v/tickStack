@@ -108,63 +108,6 @@
   {% endfor %}
 {% endif %}
 
-#################### PING PLUGIN
-
-
-#{% if telegraf_plugins_ping is defined and telegraf_plugins_ping is iterable %}
-#  {% for item in telegraf_plugins_ping %}
-#    [[inputs.{{ item.plugin }}]]
-#      {% if item.url is defined and item.url is iterable %}
-#        {% for items in item.url %}
-#          {{ items }}
-#        {% endfor %}
-#      {% endif %}
-#      {% if item.tags is defined and item.tags is iterable %}
-#        [inputs.{{ item.plugin }}.tags]
-#        {% for items in item.tags %}
-#          {{ items }}
-#        {% endfor %}
-#      {% endif %}
-#  {% endfor %}
-#{% endif %}
-
-#################### PING PLUGIN
-
-
-#################### SNMP PLUGIN    FALTA
-
-
-#{% if telegraf_plugins_snmp is defined and telegraf_plugins_snmp is iterable %}
-#  {% for item in telegraf_plugins_snmp %}
-#    [[inputs.{{ item.plugin }}]]
-#                {% if item.url is defined and item.url is iterable %}
-#                        {% for items in item.url %}
-#                                {{ items }}
-#                        {% endfor %}
-#                {% endif %}
-#                version = 2
-#                interval = "60s"
-#                timeout = "10s"
-#                retries = 3
-#      {% if item.modelo is defined %}
-#        [inputs.snmp.tags]
-#            nombre = "{{item.modelo}}"
-#
-#          {% if item.modelo == "mikrotik" %}
-#               ####CONF MIKROTIK
-#          {% endif %}
-#          {% if item.modelo == "hp" %}
-#               ####CONF HP
-#          {% endif %}
-#      {% endif %}        
-
-
-#  {% endfor %}
-#{% endif %}
-
-#################### SNMP PLUGIN
-
-
 {% if telegraf_plugins_default is defined and telegraf_plugins_default|length == 0 %}
 {% if telegraf_plugins_extra is defined and telegraf_plugins_extra.keys() | length == 0 %}
 # No plugins configured, added a mem plugin so telegraf doesn't stop working.

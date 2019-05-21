@@ -4,9 +4,8 @@ telegraf_plugins_snmp:
 {%     set list = item.split(",") %}
   - plugin: snmp
     modelo: "{{ list[0]|trim() }}"
-    url:
-      - agents = [  "{{ list[1]|trim() }}:161"  ]
-      - community = "{{ list[2]|trim() }}"
+    url: "{{ list[1]|trim() }}"
+    community: "{{ list[2]|trim() }}"
 
 {%   endif %}
 {% endfor %}

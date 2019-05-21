@@ -67,15 +67,24 @@
     mode: 0640
   become: yes
 
-
-- name: "Copy telegraf snmp configuration"
-  template:
-    src: "snmp.conf.j2"
-    dest: "/configs/etc/telegraf/telegraf.d/snmp.conf"
+- name: "Copy mikrotik mib"
+  copy:
+    src: "files/MIKROTIK-MIB.txt"
+    dest: "/usr/share/snmp/mibs"
     owner: telegraf
     group: telegraf
     mode: 0640
   become: yes
+
+
+#- name: "Copy telegraf snmp configuration"
+#  template:
+#    src: "snmp.conf.j2"
+#    dest: "/configs/etc/telegraf/telegraf.d/snmp.conf"
+#    owner: telegraf
+#    group: telegraf
+#    mode: 0640
+#  become: yes
 
 - name: "Copy telegraf ping configuration"
   template:
@@ -84,6 +93,18 @@
     owner: telegraf
     group: telegraf
     mode: 0640
+  become: yes
+
+- name: SNMP configurations
+  template:
+    src: "snmp.conf.j2"
+    dest: "/configs/etc/telegraf/telegraf.d/{{item.url}}.conf"
+    owner: telegraf
+    group: telegraf
+    mode: 0640
+  with_items:
+    - "{{telegraf_plugins_snmp }}"
+  run_once: true
   become: yes
 
 

@@ -59,8 +59,8 @@ telegraf_plugins_default:
   - plugin: processes
   - plugin: kernel
 
-telegraf_plugins_ping:
-telegraf_plugins_snmp:
+#telegraf_plugins_ping:
+#telegraf_plugins_snmp:
 
 # extra configuration - /etc/telegraf/telegraf.d/*
 telegraf_plugins_extra: {}

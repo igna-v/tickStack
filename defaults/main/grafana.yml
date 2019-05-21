@@ -9,6 +9,10 @@ grafana_dashboards:
           -   name: "linux"
               file: "./files/dashboards/linux.json"
           
+          
+          -   name: "unixServer"
+              file: "./files/dashboards/unixServer.json"
+          
 
           
           
