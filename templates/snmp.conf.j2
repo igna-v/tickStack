@@ -10,7 +10,7 @@
       timeout = "15s"
       retries = 3
         [inputs.snmp.tags]
-    nombre = "{{item.modelo}}"
+      nombre = "{{item.modelo}}"
        [[inputs.snmp.field]]
     name = "hostname"
     oid = "SNMPv2-MIB::sysName.0"
@@ -98,5 +98,78 @@
     oid = ".1.3.6.1.4.1.14988.1.1.1.2"
 
     {%endif %}
+
+
+ {% if item.modelo == "UbiquitiAP"%}
+       [[inputs.snmp.table]]
+    name = "unifiVapTable"
+    inherit_tags = [ "nombre" ]
+    oid = "UBNT-UniFi-MIB::unifiVapTable"
+    [[inputs.snmp.table.field]]
+      name = "unifiVapIndex"
+      oid = "UBNT-UniFi-MIB::unifiVapIndex"
+      is_tag = true
+
+
+  [[inputs.snmp.table]]
+       name = "unifiIfTable"
+       inherit_tags = [ "nombre" ]
+       oid = "UBNT-UniFi-MIB::unifiIfTable"
+    [[inputs.snmp.table.field]]
+      name = "index"
+      oid = "UBNT-UniFi-MIB::unifiIfIndex"
+      is_tag = true
+
+
+   [[inputs.snmp.table]]
+       name = "unifiRadioTable"
+       inherit_tags = [ "nombre" ]
+       oid = "UBNT-UniFi-MIB::unifiRadioTable"
+    [[inputs.snmp.table.field]]
+      name = "index"
+      oid = "UBNT-UniFi-MIB::unifiRadioIndex"
+      is_tag = true
+
+  [[inputs.snmp.table]]
+       name = "unifiApSystem"
+      inherit_tags = [ "nombre" ]
+    [[inputs.snmp.table.field]]
+      name = "IP_AP"
+      oid = ".1.3.6.1.4.1.41112.1.6.3.1"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "Nombre_del_AP"
+      oid = ".1.3.6.1.2.1.1.5"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "Modelo_del_dispositivo"
+      oid = ".1.3.6.1.4.1.41112.1.6.3.3"
+      is_tag = true
+    [[inputs.snmp.table.field]]
+      name = "Version_de_firmware"
+      oid = ".1.3.6.1.4.1.41112.1.6.3.6"
+    [[inputs.snmp.table.field]]
+      name = "Uptime"
+      oid = ".1.3.6.1.2.1.1.3"
+    [[inputs.snmp.table.field]]
+      name = "Free_memory"
+      oid = "1.3.6.1.4.1.10002.1.1.1.1.2"
+    [[inputs.snmp.table.field]]
+      name = "Total_memory"
+      oid = "1.3.6.1.4.1.10002.1.1.1.1.1"
+
+
+
+  [[inputs.snmp.table]]
+       name = "unifiApSystem2"
+       inherit_tags = [ "nombre" ]
+    [[inputs.snmp.table.field]]
+      name = "WLAN_Direccion_MAC_del_dispositivo"
+      oid = ".1.3.6.1.2.1.2.2.1.6"
+
+
+    {%endif %}
+
+
 
 {% endif %}

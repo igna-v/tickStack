@@ -58,23 +58,20 @@
     mode: 0640
   become: yes
 
-- name: "Copy if mib"
-  copy:
-    src: "files/IF-MIB.txt"
-    dest: "/usr/share/snmp/mibs"
-    owner: telegraf
-    group: telegraf
-    mode: 0640
-  become: yes
 
-- name: "Copy mikrotik mib"
+- name: "Copy mibs"
   copy:
-    src: "files/MIKROTIK-MIB.txt"
+    src: "files/mibs/{{item}}"
     dest: "/usr/share/snmp/mibs"
     owner: telegraf
     group: telegraf
     mode: 0640
   become: yes
+  with_items:
+    - UBNT-UniFi-MIB.txt
+    - IF-MIB.txt
+    - MIKROTIK-MIB.txt
+    - UBNT-MIB.txt
 
 
 #- name: "Copy telegraf snmp configuration"
